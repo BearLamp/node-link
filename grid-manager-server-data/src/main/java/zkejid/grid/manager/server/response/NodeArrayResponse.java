@@ -8,6 +8,9 @@ public class NodeArrayResponse {
     private String[] ids;
     private String error;
 
+    public NodeArrayResponse() {
+    }
+
     public NodeArrayResponse(String[] ids, String error) {
         this.ids = ids;
         this.error = error;
@@ -24,5 +27,13 @@ public class NodeArrayResponse {
 
     public String getError() {
         return error;
+    }
+
+    public void setIds(String[] ids) {
+        this.ids = ids;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

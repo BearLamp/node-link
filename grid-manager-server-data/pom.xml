@@ -9,23 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>grid-manager-server-client</artifactId>
+    <artifactId>grid-manager-server-data</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>zkejid</groupId>
-            <artifactId>grid-manager-api</artifactId>
+            <artifactId>grid-api</artifactId>
             <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>zkejid</groupId>
-            <artifactId>grid-manager-server-data</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.2</version>
         </dependency>
     </dependencies>
+
 </project>

@@ -5,6 +5,8 @@ public class BooleanResponse {
     private Boolean value;
     private String error;
 
+    public BooleanResponse() {}
+
     public BooleanResponse(Boolean value, String error) {
         this.value = value;
         this.error = error;
@@ -16,5 +18,13 @@ public class BooleanResponse {
 
     public String getError() {
         return error;
+    }
+
+    public void setValue(Boolean value) {
+        this.value = value;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

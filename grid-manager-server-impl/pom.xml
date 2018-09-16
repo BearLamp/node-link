@@ -22,6 +22,11 @@
             <artifactId>grid-persister-impl</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>zkejid</groupId>
+            <artifactId>grid-manager-server-data</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

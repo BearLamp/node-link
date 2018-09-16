@@ -8,6 +8,8 @@ public class NodeResponse {
     private String id;
     private String error;
 
+    public NodeResponse() {}
+
     public NodeResponse(String id, String error) {
         this.id = id;
         this.error = error;
@@ -19,5 +21,13 @@ public class NodeResponse {
 
     public String getError() {
         return error;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

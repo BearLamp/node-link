@@ -5,6 +5,9 @@ public class IteratorResponse {
     private String iteratorKey;
     private String error;
 
+    public IteratorResponse() {
+    }
+
     public IteratorResponse(String iteratorKey, String error) {
         this.iteratorKey = iteratorKey;
         this.error = error;
@@ -16,5 +19,13 @@ public class IteratorResponse {
 
     public String getError() {
         return error;
+    }
+
+    public void setIteratorKey(String iteratorKey) {
+        this.iteratorKey = iteratorKey;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }
