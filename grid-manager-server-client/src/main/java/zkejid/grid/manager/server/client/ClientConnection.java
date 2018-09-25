@@ -17,7 +17,7 @@ public class ClientConnection {
     private String result;
 
     public ClientConnection() {
-        this("localhost", "8080", "/rest/grid/manager");
+        this("http://localhost", "8080", "/rest/grid/manager");
     }
 
     public ClientConnection(String domain, String port, String path) {
