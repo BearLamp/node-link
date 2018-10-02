@@ -133,8 +133,13 @@ public class GridManagerClient implements GridManager {
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
         } else {
+            // null values are OK
             final String result = response.getId();
-            return new NodeClientImpl(result);
+            if (result == null) {
+                return null;
+            } else {
+                return new NodeClientImpl(result);
+            }
         }
     }
 
