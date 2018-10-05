@@ -34,7 +34,7 @@ public class GridManagerClient implements GridManager {
             throw new RuntimeServiceException(response.getError());
         } else {
             final String result = response.getId();
-            return new NodeClientImpl(result);
+            return new NodeClientImpl(result, host, port, path);
         }
     }
 
@@ -50,7 +50,7 @@ public class GridManagerClient implements GridManager {
             throw new RuntimeServiceException(response.getError());
         } else {
             final String result = response.getId();
-            return new NodeClientImpl(result);
+            return new NodeClientImpl(result, host, port, path);
         }
     }
 
@@ -67,7 +67,7 @@ public class GridManagerClient implements GridManager {
             throw new RuntimeServiceException(response.getError());
         } else {
             final String result = response.getId();
-            return new NodeClientImpl(result);
+            return new NodeClientImpl(result, host, port, path);
         }
     }
 
@@ -106,7 +106,7 @@ public class GridManagerClient implements GridManager {
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
         } else {
-            return new NodeIteratorClient(response.getIteratorKey());
+            return new NodeIteratorClient(response.getIteratorKey(), host, port, path);
         }
     }
 
@@ -119,7 +119,7 @@ public class GridManagerClient implements GridManager {
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
         } else {
-            return new NodeArrayIteratorClient(response.getIteratorKey());
+            return new NodeArrayIteratorClient(response.getIteratorKey(), host, port, path);
         }
     }
 
@@ -138,7 +138,7 @@ public class GridManagerClient implements GridManager {
             if (result == null) {
                 return null;
             } else {
-                return new NodeClientImpl(result);
+                return new NodeClientImpl(result, host, port, path);
             }
         }
     }
@@ -169,7 +169,7 @@ public class GridManagerClient implements GridManager {
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
         } else {
-            return new NodeIteratorClient(response.getIteratorKey());
+            return new NodeIteratorClient(response.getIteratorKey(), host, port, path);
         }
     }
 
@@ -184,7 +184,7 @@ public class GridManagerClient implements GridManager {
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
         } else {
-            return new NodeIteratorClient(response.getIteratorKey());
+            return new NodeIteratorClient(response.getIteratorKey(), host, port, path);
         }
     }
 
@@ -199,7 +199,7 @@ public class GridManagerClient implements GridManager {
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
         } else {
-            return new NodeIteratorClient(response.getIteratorKey());
+            return new NodeIteratorClient(response.getIteratorKey(), host, port, path);
         }
     }
 
@@ -218,7 +218,7 @@ public class GridManagerClient implements GridManager {
             if (response.getError() != null) {
                 throw new RuntimeServiceException(response.getError());
             } else {
-                return new NodeIteratorClient(response.getIteratorKey());
+                return new NodeIteratorClient(response.getIteratorKey(), host, port, path);
             }
         } else {
             throw new RuntimeServiceException("Plain iterators not supported.");
@@ -240,7 +240,7 @@ public class GridManagerClient implements GridManager {
             if (response.getError() != null) {
                 throw new RuntimeServiceException(response.getError());
             } else {
-                return new NodeIteratorClient(response.getIteratorKey());
+                return new NodeIteratorClient(response.getIteratorKey(), host, port, path);
             }
         } else {
             throw new RuntimeServiceException("Plain iterators not supported.");
@@ -262,7 +262,7 @@ public class GridManagerClient implements GridManager {
             if (response.getError() != null) {
                 throw new RuntimeServiceException(response.getError());
             } else {
-                return new NodeIteratorClient(response.getIteratorKey());
+                return new NodeIteratorClient(response.getIteratorKey(), host, port, path);
             }
         } else {
             throw new RuntimeServiceException("Plain iterators not supported.");

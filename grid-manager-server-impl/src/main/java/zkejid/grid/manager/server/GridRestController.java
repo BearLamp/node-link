@@ -371,6 +371,46 @@ public class GridRestController {
         }
     }
 
+    @RequestMapping("/node/getPayload")
+    public ByteResponse getPayload(
+            @RequestParam(name = "nodeId") String nodeId) {
+
+        try {
+            final Node node = gridManager.getNode(nodeId);
+            if (node == null) {
+                return new ByteResponse(null, "Node not found. Id is [" + nodeId + "].");
+            }
+
+            return new ByteResponse(node.getPayload(), null);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            if (message == null) {
+                message = "Got exception " + e.getClass().getName() + " without error message.";
+            }
+            return new ByteResponse(null, message);
+        }
+    }
+
+    @RequestMapping("/node/getPayload20")
+    public StringResponse getPayload20(
+            @RequestParam(name = "nodeId") String nodeId) {
+
+        try {
+            final Node node = gridManager.getNode(nodeId);
+            if (node == null) {
+                return new StringResponse(null, "Node not found. Id is [" + nodeId + "].");
+            }
+
+            return new StringResponse(node.getPayload20(), null);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            if (message == null) {
+                message = "Got exception " + e.getClass().getName() + " without error message.";
+            }
+            return new StringResponse(null, message);
+        }
+    }
+
     private byte[] getPayloadFromEncodedString(String encoded) {
         if (encoded == null) {
             return new byte[]{};

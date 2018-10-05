@@ -9,15 +9,22 @@ import java.util.Iterator;
 
 public class NodeIteratorClient implements Iterator<Node> {
 
+    private String host;
+    private String port;
+    private String path;
+
     private String key;
 
-    public NodeIteratorClient(String key) {
+    public NodeIteratorClient(String key, String host, String port, String path) {
         this.key = key;
+        this.host = host;
+        this.port = port;
+        this.path = path;
     }
 
     @Override
     public boolean hasNext() {
-        final BooleanResponse response = new ClientConnection()
+        final BooleanResponse response = getClientConnection()
                 .addPathPart("/iteration/node/hasNext")
                 .addGetParam("key", key)
                 .result()
@@ -31,7 +38,7 @@ public class NodeIteratorClient implements Iterator<Node> {
 
     @Override
     public Node next() {
-        final NodeResponse response = new ClientConnection()
+        final NodeResponse response = getClientConnection()
                 .addPathPart("/iteration/node/next")
                 .addGetParam("key", key)
                 .result()
@@ -39,11 +46,16 @@ public class NodeIteratorClient implements Iterator<Node> {
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
         } else {
-            return new NodeClientImpl(response.getId());
+            return new NodeClientImpl(response.getId(), host, port, path);
         }
     }
 
     public String getKey() {
         return key;
     }
+
+    private ClientConnection getClientConnection() {
+        return new ClientConnection(host, port, path);
+    }
+
 }
