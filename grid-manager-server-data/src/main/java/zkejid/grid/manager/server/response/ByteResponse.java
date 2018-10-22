@@ -1,5 +1,14 @@
 package zkejid.grid.manager.server.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import zkejid.grid.manager.server.response.serialization.ByteResponseDeserializer;
+import zkejid.grid.manager.server.response.serialization.ByteResponseSerializer;
+
+@JsonSerialize(using = ByteResponseSerializer.class)
+@JsonDeserialize(using = ByteResponseDeserializer.class)
+@JsonInclude(content = JsonInclude.Include.NON_NULL, value = JsonInclude.Include.NON_EMPTY)
 public class ByteResponse {
 
     private byte[] value;

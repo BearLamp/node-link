@@ -28,7 +28,7 @@ public class NodeClientImpl implements Node {
     @Override
     public byte[] getPayload() {
         final ByteResponse response = getClientConnection()
-                .addPathPart("/iteration/node/getPayload")
+                .addPathPart("/node/getPayload")
                 .addGetParam("nodeId", id)
                 .result()
                 .parseResponse(ByteResponse.class);
@@ -42,7 +42,7 @@ public class NodeClientImpl implements Node {
     @Override
     public String getPayload20() {
         final StringResponse response = getClientConnection()
-                .addPathPart("/iteration/node/getPayload20")
+                .addPathPart("/node/getPayload20")
                 .addGetParam("nodeId", id)
                 .result()
                 .parseResponse(StringResponse.class);
