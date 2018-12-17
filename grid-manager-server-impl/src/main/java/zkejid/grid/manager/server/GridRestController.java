@@ -177,6 +177,28 @@ public class GridRestController {
         }
     }
 
+    @RequestMapping("/deleteLink")
+    public BooleanResponse deleteLink(
+            @RequestParam(name = "node1Id") String node1Id,
+            @RequestParam(name = "linkNodeId") String linkNodeId,
+            @RequestParam(name = "node2Id") String node2Id) {
+
+        try {
+            final Node node1 = gridManager.getNode(node1Id);
+            final Node linkNode = gridManager.getNode(linkNodeId);
+            final Node node2 = gridManager.getNode(node2Id);
+            final boolean result = gridManager.deleteLink(node1, linkNode, node2);
+
+            return new BooleanResponse(result, null);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            if (message == null) {
+                message = "Got exception " + e.getClass().getName() + " without error message.";
+            }
+            return new BooleanResponse(null, message);
+        }
+    }
+
     @RequestMapping("/getLinks")
     public IteratorResponse getLinks(
             @RequestParam(name = "nodeId") String nodeId) {

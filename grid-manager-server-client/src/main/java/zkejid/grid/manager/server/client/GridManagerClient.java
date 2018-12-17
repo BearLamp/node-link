@@ -160,6 +160,22 @@ public class GridManagerClient implements GridManager {
     }
 
     @Override
+    public boolean deleteLink(Node node1, Node linkNode, Node node2) {
+        final BooleanResponse response = createClientConnection()
+                .addPathPart("/deleteLink")
+                .addGetParam("node1Id", node1.getId())
+                .addGetParam("linkNodeId", linkNode.getId())
+                .addGetParam("node2Id", node2.getId())
+                .result()
+                .parseResponse(BooleanResponse.class);
+        if (response.getError() != null) {
+            throw new RuntimeServiceException(response.getError());
+        } else {
+            return response.isValue();
+        }
+    }
+
+    @Override
     public Iterator<Node> getLinks(Node node1) {
         final IteratorResponse response = createClientConnection()
                 .addPathPart("/getLinks")
