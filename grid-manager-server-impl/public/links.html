@@ -65,13 +65,17 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <link href="css/starter-template.css" rel="stylesheet">
+    <link href="css/all.css" rel="stylesheet"> <!--load all styles -->
     <script>
       var getAllLinks = function() {
         $.get("/rest/grid/manager/getAllLinks", {}, function(arg){
           var iterKey = arg.iteratorKey;
           var appendRow = function(node1, linkNode, node2) {
-            $("#linksTable tbody").append('<tr scope="row"><td>' + node1 + '</td><td>' + linkNode + '</td><td>' + node2 + '</td></tr>');
+            $("#linksTable tbody").append(
+              '<tr scope="row"><td>' + node1 + '</td><td>' + linkNode + '</td><td>' + node2 + '</td><td>'
+              + '<button type="button" class="btn btn-default delete-link" aria-label="Delete link"><i class="fas fa-trash-alt"></i></button>'
+              + '</td></tr>'
+            );
           }
           var recAjaxCall = function(key) {
             $.get("/rest/grid/manager/iteration/node_array/hasNext", {"key": key}, function(arg){
@@ -87,6 +91,14 @@
             });
           }
           recAjaxCall(iterKey);
+        });
+        $("#linksTable").on("click", "button.delete-link", function(a) {
+          var cells = $(a.target).closest("tr").find("td");
+          $.get("/rest/grid/manager/deleteLink", {"node1Id": cells.eq(0).text(), "linkNodeId": cells.eq(1).text(), "node2Id": cells.eq(2).text()}, function(arg){
+              if (arg != null && arg.value === true) {
+                $(a.target).closest("tr").remove();
+              }
+            });
         });
       }
       getAllLinks();
