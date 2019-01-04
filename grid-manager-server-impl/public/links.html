@@ -81,12 +81,18 @@
             $.get("/rest/grid/manager/iteration/node_array/hasNext", {"key": key}, function(arg){
               if (arg.value === true) {
                 $.get("/rest/grid/manager/iteration/node_array/next", {"key": key}, function(arg){
-                  var node1 = arg.ids[0];
-                  var linkNode = arg.ids[1];
-                  var node2 = arg.ids[2];
-                  appendRow(node1, linkNode, node2);
-                  recAjaxCall(key);
+                  if (arg.ids === null) {
+                    alert(arg.error);
+                  } else {
+                    var node1 = arg.ids[0];
+                    var linkNode = arg.ids[1];
+                    var node2 = arg.ids[2];
+                    appendRow(node1, linkNode, node2);
+                    recAjaxCall(key);
+                  }
                 });
+              } else if (arg.value === null) {
+                alert(arg.error);
               }
             });
           }

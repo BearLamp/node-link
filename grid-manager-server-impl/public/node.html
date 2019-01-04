@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Nodes list</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/starter-template.css" rel="stylesheet">
+
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/nodes.html">Nodes</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/links.html">Links</a>
+          </li>
+        </ul>
+        <form id="searchForm" class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
+
+    <main role="main" class="container">
+      <div class="starter-template">
+
+        <h1>Outer links from given node</h1>
+        <table id="outerLinksTable" class="table">
+          <thead>
+            <tr>
+              <th scope="col">This node</th>
+              <th scope="col">Links</th>
+              <th scope="col">Linked nodes</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <h1>Inner links to given node</h1>
+        <table id="innerLinksTable" class="table">
+          <thead>
+            <tr>
+              <th scope="col">Linked nodes</th>
+              <th scope="col">Links</th>
+              <th scope="col">This node</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </main><!-- /.container -->
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <link href="css/starter-template.css" rel="stylesheet">
+    <script>
+      var getInnerLinks = function(id) {
+        $.get("/rest/grid/manager/getAllNodes", {}, function(arg){
+          var iterKey = arg.iteratorKey;
+
+          var appendRow = function(node1, linkNode, node2) {
+            $("#innerLinksTable tbody").append('<tr scope="row"><td>' + node1 + '</td><td>' + linkNode + '</td><td>' + node2 + '</td></tr>');
+          }
+
+          var recAjaxCall1= function(){}
+
+          var recAjaxCall2 = function(key1, key2, linkNodeId, node2Id) {
+            $.get("/rest/grid/manager/iteration/node/hasNext", {"key": key2}, function(arg){
+              if (arg.value === true) {
+                $.get("/rest/grid/manager/iteration/node/next", {"key": key2}, function(arg){
+                  if (arg.id === null) {
+                    alert(arg.error);
+                  } else {
+                    appendRow(arg.id, linkNodeId, node2Id);
+                    recAjaxCall2(key1, key2, linkNodeId, node2Id);
+                  }
+                });
+              } else if (arg.value === false) {
+                recAjaxCall1(node2Id, key1);
+              } else if (arg.value === null) {
+                alert(arg.error);
+              }
+            });
+          }
+
+          var processLink = function(key, node2Id, arg) {
+            var linkNodeId = arg.id;
+            if (linkNodeId === null) {
+              alert(arg.error);
+            } else {
+              $.get("/rest/grid/manager/getNodesLinkedTo", {"linkNodeId": linkNodeId, "node2Id": node2Id}, function(arg) {
+                var node1IterKey = arg.iteratorKey;
+                recAjaxCall2(key, node1IterKey, linkNodeId, node2Id);
+              });
+            }
+          }
+
+          recAjaxCall1 = function(nodeId, key) {
+            $.get("/rest/grid/manager/iteration/node/hasNext", {"key": key}, function(arg){
+              if (arg.value === true) {
+                $.get("/rest/grid/manager/iteration/node/next", {"key": key}, function(arg){
+                  processLink(key, nodeId, arg);
+                });
+              } else if (arg.value === false) {
+                alert("Search ended!");
+              } else if (arg.value === null) {
+                alert(arg.error);
+              }
+            });
+          }
+          recAjaxCall1(id, iterKey);
+        });
+      }
+
+      var getOuterLinks = function(searchId) {
+        $.get("/rest/grid/manager/getLinks", {"nodeId": searchId}, function(arg){
+          var iterKey = arg.iteratorKey;
+
+          var appendRow = function(node1, linkNode, node2) {
+            $("#outerLinksTable tbody").append('<tr scope="row"><td>' + node1 + '</td><td>' + linkNode + '</td><td>' + node2 + '</td></tr>');
+          }
+
+          var recAjaxCall1= function(){}
+
+          var recAjaxCall2 = function(key1, key2, node1Id, linkNodeId) {
+            $.get("/rest/grid/manager/iteration/node/hasNext", {"key": key2}, function(arg){
+              if (arg.value === true) {
+                $.get("/rest/grid/manager/iteration/node/next", {"key": key2}, function(arg){
+                  if (arg.id === null) {
+                    alert(arg.error);
+                  } else {
+                    appendRow(node1Id, linkNodeId, arg.id);
+                    recAjaxCall2(key1, key2, node1Id, linkNodeId);
+                  }
+                });
+              } else if (arg.value === false) {
+                recAjaxCall1(node1Id, key1);
+              } else if (arg.value === null) {
+                alert(arg.error);
+              }
+            });
+          }
+
+          var processLink = function(key1, node1Id, arg) {
+            var nodeId = arg.id;
+            if (nodeId === null) {
+              alert(arg.error);
+            } else {
+              $.get("/rest/grid/manager/getLinkedNodes", {"node1Id": searchId, "linkNodeId": nodeId}, function(arg) {
+                var node2IterKey = arg.iteratorKey;
+                recAjaxCall2(key1, node2IterKey, node1Id, nodeId);
+              });
+            }
+          }
+
+          recAjaxCall1 = function(nodeId, key) {
+            $.get("/rest/grid/manager/iteration/node/hasNext", {"key": key}, function(arg){
+              if (arg.value === true) {
+                $.get("/rest/grid/manager/iteration/node/next", {"key": key}, function(arg){
+                  processLink(key, nodeId, arg);
+                });
+              } else if (arg.value === false) {
+                getInnerLinks(searchId);
+              } else if (arg.value === null) {
+                alert(arg.error);
+              }
+            });
+          }
+          recAjaxCall1(searchId, iterKey);
+        });
+      }
+
+      $("#searchForm").submit(function( event ) {
+        event.preventDefault();
+        var searchId = $("#searchForm input").val();
+        getOuterLinks(searchId);
+      });
+    </script>
+  </body>
+</html>

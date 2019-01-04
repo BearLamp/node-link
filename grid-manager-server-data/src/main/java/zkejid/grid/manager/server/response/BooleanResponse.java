@@ -12,7 +12,7 @@ public class BooleanResponse {
         this.error = error;
     }
 
-    public boolean isValue() {
+    public Boolean isValue() {
         return value;
     }
 

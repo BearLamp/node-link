@@ -1,5 +1,6 @@
 package zkejid.grid.manager.server.iteration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,7 +16,8 @@ import java.util.concurrent.atomic.AtomicLong;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class IterationBean<T> {
 
-    private static final long KEY_EXISTENCE_DELTA = 50L;
+    @Value("${grid.iteration.time.limit:50}")
+    private Long keyExistenceDelta;
 
     private Map<String, Iterator<T>> iterators = new ConcurrentHashMap<>();
     private SortedMap<Long, List<String>> activeKeys = new ConcurrentSkipListMap<>();
@@ -48,7 +50,7 @@ public class IterationBean<T> {
     @Scheduled(fixedDelay = 1000, initialDelay = 1000)
     private void cleanInactiveKeys() {
         final long currentValue = incrementCounter();
-        final long minCountAllowed = getMinCountAllowed(currentValue, KEY_EXISTENCE_DELTA);
+        final long minCountAllowed = getMinCountAllowed(currentValue, keyExistenceDelta);
         removeEntriesOlderThan(minCountAllowed);
     }
 
