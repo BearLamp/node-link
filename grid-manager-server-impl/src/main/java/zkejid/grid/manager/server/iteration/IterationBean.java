@@ -51,7 +51,16 @@ public class IterationBean<T> {
     private void cleanInactiveKeys() {
         final long currentValue = incrementCounter();
         final long minCountAllowed = getMinCountAllowed(currentValue, keyExistenceDelta);
-        removeEntriesOlderThan(minCountAllowed);
+        // if we have long positive - do job
+        if (currentValue >= 0) {
+            removeEntriesOlderThan(minCountAllowed);
+        } else {
+            // if we overflowed (0_o) long - delete all iterators and move to 0
+            iterators.clear();
+            activeKeys.clear();
+            counter.set(0);
+        }
+
     }
 
     private long incrementCounter() {
@@ -67,8 +76,8 @@ public class IterationBean<T> {
         if (minCount > 0) {
             return minCount;
         } else {
-            // + for negative value (overflow case)
-            return Long.MAX_VALUE + minCount;
+            // should not be negative
+            return 0;
         }
     }
 
