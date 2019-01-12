@@ -37,6 +37,9 @@
             <a class="nav-link" href="/links.html">Links</a>
           </li>
         </ul>
+        <form id="createNode" class="form-inline my-2 my-lg-0 mr-sm-2" style="display: none">
+          <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Create</button>
+        </form>
         <form id="searchForm" class="form-inline my-2 my-lg-0">
           <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -196,10 +199,38 @@
         });
       }
 
-      $("#searchForm").submit(function( event ) {
+      $("#searchForm").submit(function(event) {
         event.preventDefault();
         var searchId = $("#searchForm input").val();
-        getOuterLinks(searchId);
+        $.get("/rest/grid/manager/getNode", {"nodeId": searchId}, function(arg){
+          if (arg === null) {
+            alert("Got null response.");
+          } else if (arg.error !== null) {
+            alert("Error: " + arg.error);
+          } else if (arg.id === null && arg.error === null) {
+            alert("No such node: " + searchId);
+            $("#createNode").show();
+          } else if (arg.id !== null && arg.error === null) {
+            getOuterLinks(searchId);
+          }
+        });
+      });
+
+      $("#createNode").submit(function(event) {
+        event.preventDefault();
+        var searchId = $("#searchForm input").val();
+        $.get("/rest/grid/manager/createNode", {"nodeId": searchId}, function(arg){
+          if (arg === null) {
+            alert("Got null response.");
+          } else if (arg.error !== null) {
+            alert("Error: " + arg.error);
+          } else if (arg.id !== null && arg.error == null) {
+            $("#createNode").hide();
+            $("#searchForm input").click();
+          } else {
+            alert("Unknown error");
+          }
+        });
       });
     </script>
   </body>
