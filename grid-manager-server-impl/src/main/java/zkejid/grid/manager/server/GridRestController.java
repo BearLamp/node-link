@@ -437,6 +437,6 @@ public class GridRestController {
         if (encoded == null) {
             return new byte[]{};
         }
-        return Base64.getDecoder().decode(encoded);
+        return Base64.getUrlDecoder().decode(encoded);
     }
 }

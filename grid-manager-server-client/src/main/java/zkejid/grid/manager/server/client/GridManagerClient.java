@@ -27,8 +27,8 @@ public class GridManagerClient implements GridManager {
     public Node createNode(String id) {
         final NodeResponse response = createClientConnection()
                 .addPathPart("/createNode")
-                .addGetParam("nodeId", id)
-                .result()
+                .addPostParam("nodeId", id)
+                .resultPost()
                 .parseResponse(NodeResponse.class);
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
@@ -42,9 +42,9 @@ public class GridManagerClient implements GridManager {
     public Node createNode(String id, byte[] payload) {
         final NodeResponse response = createClientConnection()
                 .addPathPart("/createNode")
-                .addGetParam("nodeId", id)
-                .addGetParamBase64Encoded("encodedPayload", payload)
-                .result()
+                .addPostParam("nodeId", id)
+                .addPostParamBase64Encoded("encodedPayload", payload)
+                .resultPost()
                 .parseResponse(NodeResponse.class);
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
@@ -58,10 +58,10 @@ public class GridManagerClient implements GridManager {
     public Node createNode(String id, byte[] payload, Node classNode) {
         final NodeResponse response = createClientConnection()
                 .addPathPart("/createNode")
-                .addGetParam("nodeId", id)
-                .addGetParamBase64Encoded("encodedPayload", payload)
-                .addGetParam("classNodeId", classNode.getId())
-                .result()
+                .addPostParam("nodeId", id)
+                .addPostParamBase64Encoded("encodedPayload", payload)
+                .addPostParam("classNodeId", classNode.getId())
+                .resultPost()
                 .parseResponse(NodeResponse.class);
         if (response.getError() != null) {
             throw new RuntimeServiceException(response.getError());
