@@ -87,7 +87,7 @@ public class ClientConnection {
             }
             this.result = sb.toString();
         } catch (Exception e) {
-            throw new RuntimeServiceException(e);
+            throw new RuntimeServiceException("URL: " + baseUrl, e);
         }
         return this;
     }
@@ -131,7 +131,7 @@ public class ClientConnection {
             }
             this.result = sb.toString();
         } catch (Exception e) {
-            throw new RuntimeServiceException(e);
+            throw new RuntimeServiceException("URL: " + baseUrl, e);
         }
         return this;
     }
