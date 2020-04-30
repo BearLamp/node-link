@@ -19,6 +19,7 @@
         <module>grid-manager-server-impl</module>
         <module>grid-manager-server-client</module>
         <module>grid-manager-server-data</module>
+        <module>grid-manager-server-group</module>
     </modules>
 
 </project>
