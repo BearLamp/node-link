@@ -15,11 +15,27 @@
         <version>2.0.3.RELEASE</version>
     </parent>
 
+    <properties>
+        <jackson.version>2.11.0</jackson.version>
+    </properties>
+
     <modules>
         <module>grid-manager-server-impl</module>
         <module>grid-manager-server-client</module>
         <module>grid-manager-server-data</module>
         <module>grid-manager-server-group</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.fasterxml.jackson</groupId>
+                <artifactId>jackson-bom</artifactId>
+                <version>${jackson.version}</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
