@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>grid-manager-server</artifactId>
-        <groupId>zkejid</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <artifactId>grid-manager-server-data</artifactId>
+  <dependencies>
+    <dependency>
+      <artifactId>grid-api</artifactId>
+      <groupId>zkejid</groupId>
+      <version>1.0-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <artifactId>jackson-databind</artifactId>
+      <groupId>com.fasterxml.jackson.core</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>junit</artifactId>
+      <groupId>junit</groupId>
+      <scope>test</scope>
+      <version>4.12</version>
+    </dependency>
+  </dependencies>
 
-    <artifactId>grid-manager-server-data</artifactId>
+  <modelVersion>4.0.0</modelVersion>
 
-    <dependencies>
-        <dependency>
-            <groupId>zkejid</groupId>
-            <artifactId>grid-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+  <parent>
+    <artifactId>grid-manager-server</artifactId>
+    <groupId>zkejid</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
 
 </project>

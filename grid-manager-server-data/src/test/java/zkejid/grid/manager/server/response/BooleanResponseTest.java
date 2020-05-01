@@ -5,11 +5,11 @@ import org.junit.Test;
 
 public class BooleanResponseTest {
 
-    @Test
-    public void isValue_error_false() throws Exception {
-        final BooleanResponse booleanResponse = new BooleanResponse(null, "error msg");
+  @Test
+  public void isValue_error_false() throws Exception {
+    final BooleanResponse booleanResponse = new BooleanResponse(null, "error msg");
 
-        Assert.assertNull(booleanResponse.isValue());
-    }
+    Assert.assertNull(booleanResponse.isValue());
+  }
 
 }

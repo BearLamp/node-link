@@ -5,29 +5,30 @@ package zkejid.grid.manager.server.response;
  */
 public class NodeResponse {
 
-    private String id;
-    private String error;
+  private String id;
+  private String error;
 
-    public NodeResponse() {}
+  public NodeResponse() {
+  }
 
-    public NodeResponse(String id, String error) {
-        this.id = id;
-        this.error = error;
-    }
+  public NodeResponse(String id, String error) {
+    this.id = id;
+    this.error = error;
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public String getError() {
-        return error;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public String getError() {
+    return error;
+  }
 
-    public void setError(String error) {
-        this.error = error;
-    }
+  public void setError(String error) {
+    this.error = error;
+  }
 }
