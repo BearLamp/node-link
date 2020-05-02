@@ -23,7 +23,7 @@ public class NodeArrayIteratorClient implements Iterator<Node[]> {
 
   @Override
   public boolean hasNext() {
-    final BooleanResponse response = new ClientConnection()
+    final BooleanResponse response = createClientConnection()
         .addPathPart("/iteration/node_array/hasNext")
         .addGetParam("key", key)
         .result()
@@ -37,7 +37,7 @@ public class NodeArrayIteratorClient implements Iterator<Node[]> {
 
   @Override
   public Node[] next() {
-    final NodeArrayResponse response = new ClientConnection()
+    final NodeArrayResponse response = createClientConnection()
         .addPathPart("/iteration/node_array/next")
         .addGetParam("key", key)
         .result()

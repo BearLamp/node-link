@@ -4,6 +4,15 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>grid-manager-server</artifactId>
 
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.0.0-M4</version>
+      </plugin>
+    </plugins>
+  </build>
   <dependencyManagement>
     <dependencies>
       <dependency>
@@ -12,6 +21,29 @@
         <scope>import</scope>
         <type>pom</type>
         <version>${jackson.version}</version>
+      </dependency>
+      <!-- bridge jcl to slf4j (wiremock uses apache commons logging) -->
+      <dependency>
+        <artifactId>jcl-over-slf4j</artifactId>
+        <groupId>org.slf4j</groupId>
+        <version>${jcl.slf4j.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>logback-classic</artifactId>
+        <groupId>ch.qos.logback</groupId>
+        <version>${logback.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>wiremock-extension</artifactId>
+        <groupId>com.github.JensPiegsa</groupId>
+        <scope>test</scope>
+        <version>${wiremock.extensions.version}</version>
+      </dependency>
+      <dependency>
+        <artifactId>junit-jupiter</artifactId>
+        <groupId>org.junit.jupiter</groupId>
+        <scope>test</scope>
+        <version>5.6.2</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -32,9 +64,20 @@
     <version>2.0.3.RELEASE</version>
   </parent>
 
+  <!-- wiremock-extension dependency requirement -->
   <properties>
     <jackson.version>2.11.0</jackson.version>
+    <jcl.slf4j.version>1.7.30</jcl.slf4j.version>
+    <logback.version>1.2.3</logback.version>
+    <wiremock.extensions.version>0.4.0</wiremock.extensions.version>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
 
   <version>1.0-SNAPSHOT</version>
 
