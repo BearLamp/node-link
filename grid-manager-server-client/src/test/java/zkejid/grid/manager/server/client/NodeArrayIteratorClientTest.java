@@ -13,6 +13,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+/**
+ * Unit tests for {@link NodeArrayIteratorClient}.
+ */
 @DisplayName("NodeArrayIteratorClient test")
 @ExtendWith(WireMockExtension.class)
 class NodeArrayIteratorClientTest {

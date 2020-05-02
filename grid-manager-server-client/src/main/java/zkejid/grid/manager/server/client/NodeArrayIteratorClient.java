@@ -6,7 +6,10 @@ import zkejid.grid.manager.server.response.BooleanResponse;
 import zkejid.grid.manager.server.response.NodeArrayResponse;
 import zkejid.impl.exceptions.RuntimeServiceException;
 
-public class NodeArrayIteratorClient implements Iterator<Node[]> {
+/**
+ * Client class for handling iteration over node arrays.
+ */
+class NodeArrayIteratorClient implements Iterator<Node[]> {
 
   private String host;
   private String port;
@@ -14,7 +17,7 @@ public class NodeArrayIteratorClient implements Iterator<Node[]> {
 
   private String key;
 
-  public NodeArrayIteratorClient(String key, String host, String port, String path) {
+  NodeArrayIteratorClient(String key, String host, String port, String path) {
     this.key = key;
     this.host = host;
     this.port = port;

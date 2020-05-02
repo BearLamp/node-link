@@ -1,6 +1,7 @@
 package zkejid.grid.manager.server.client;
 
 import java.util.Iterator;
+import java.util.Objects;
 import zkejid.api.node.Node;
 import zkejid.grid.manager.GridManager;
 import zkejid.grid.manager.IdCreationStrategy;
@@ -14,13 +15,26 @@ import zkejid.grid.manager.server.response.StringResponse;
 import zkejid.grid.manager.server.response.VoidResponse;
 import zkejid.impl.exceptions.RuntimeServiceException;
 
+/**
+ * HTTP client implementation of {@link GridManager}.
+ */
 public class GridManagerClient implements GridManager {
 
-  private String host;
-  private String port;
-  private String path;
+  private final String host;
+  private final String port;
+  private final String path;
 
+  /**
+   * Client constructor.
+   *
+   * @param host host name for server part. Should be in form of {@code <protocol>://<hostname>}
+   * @param port connection port for server REST API
+   * @param path additional path. If exists then should start from {@code /}
+   */
   public GridManagerClient(String host, String port, String path) {
+    Objects.requireNonNull(host, "host should be specified");
+    Objects.requireNonNull(port, "port should be specified");
+    Objects.requireNonNull(path, "path should be specified");
     this.host = host;
     this.port = port;
     this.path = path;

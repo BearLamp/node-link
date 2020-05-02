@@ -5,7 +5,10 @@ import zkejid.grid.manager.server.response.ByteResponse;
 import zkejid.grid.manager.server.response.StringResponse;
 import zkejid.impl.exceptions.RuntimeServiceException;
 
-public class NodeClientImpl implements Node {
+/**
+ * Client class for handling node methods.
+ */
+class NodeClientImpl implements Node {
 
   private final String id;
 
@@ -13,7 +16,7 @@ public class NodeClientImpl implements Node {
   private final String port;
   private final String path;
 
-  public NodeClientImpl(String id, String host, String port, String path) {
+  NodeClientImpl(String id, String host, String port, String path) {
     this.id = id;
     this.host = host;
     this.port = port;
@@ -22,6 +25,7 @@ public class NodeClientImpl implements Node {
 
   @Override
   public String getId() {
+    // it is safe return field value because it comes from server. It is not a user input.
     return id;
   }
 

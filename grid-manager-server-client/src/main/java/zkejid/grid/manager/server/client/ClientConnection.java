@@ -17,7 +17,10 @@ import java.util.HashMap;
 import java.util.Map;
 import zkejid.impl.exceptions.RuntimeServiceException;
 
-public class ClientConnection {
+/**
+ * Connection to the server.
+ */
+class ClientConnection {
 
   private static final String USER_AGENT = "Mozilla/5.0";
 
@@ -25,21 +28,17 @@ public class ClientConnection {
   private Map<String, String> params;
   private String result;
 
-  public ClientConnection() {
-    this("http://localhost", "8080", "/rest/grid/manager");
-  }
-
-  public ClientConnection(String domain, String port, String path) {
+  ClientConnection(String domain, String port, String path) {
     baseUrl = domain + ":" + port + path;
     params = new HashMap<>();
   }
 
-  public ClientConnection addPathPart(String pathPart) {
+  ClientConnection addPathPart(String pathPart) {
     baseUrl = baseUrl + pathPart;
     return this;
   }
 
-  public ClientConnection addGetParam(String name, String value) {
+  ClientConnection addGetParam(String name, String value) {
     final String encodeName;
     final String encodeValue;
 
@@ -54,22 +53,22 @@ public class ClientConnection {
     return this;
   }
 
-  public ClientConnection addGetParamBase64Encoded(String name, byte[] value) {
+  ClientConnection addGetParamBase64Encoded(String name, byte[] value) {
     final byte[] encoded = Base64.getUrlEncoder().encode(value);
     return addGetParam(name, new String(encoded, StandardCharsets.UTF_8));
   }
 
-  public ClientConnection addPostParam(String name, String value) {
+  ClientConnection addPostParam(String name, String value) {
     params.put(name, value);
     return this;
   }
 
-  public ClientConnection addPostParamBase64Encoded(String name, byte[] value) {
+  ClientConnection addPostParamBase64Encoded(String name, byte[] value) {
     final byte[] encoded = Base64.getUrlEncoder().encode(value);
     return addPostParam(name, new String(encoded, StandardCharsets.UTF_8));
   }
 
-  public ClientConnection result() {
+  ClientConnection result() {
     try {
       String initial;
       if (baseUrl.contains("?")) {
@@ -97,21 +96,7 @@ public class ClientConnection {
     return this;
   }
 
-  private String getParamsString() {
-    StringBuilder sb = new StringBuilder("");
-    for (Map.Entry<String, String> entry : params.entrySet()) {
-      if (sb.length() > 0) {
-        sb.append("&");
-      }
-      sb.append(entry.getKey());
-      sb.append("=");
-      sb.append(entry.getValue());
-    }
-
-    return sb.toString();
-  }
-
-  public ClientConnection resultPost() {
+  ClientConnection resultPost() {
     try {
       final String urlLine = baseUrl;
       final HttpURLConnection urlConnection = (HttpURLConnection) new URL(urlLine).openConnection();
@@ -142,7 +127,7 @@ public class ClientConnection {
     return this;
   }
 
-  public <T> T parseResponse(Class<T> clazz) {
+  <T> T parseResponse(Class<T> clazz) {
     ObjectMapper objectMapper = new ObjectMapper();
     final T value;
     try {
@@ -153,14 +138,17 @@ public class ClientConnection {
     return value;
   }
 
-  public String decodeBase64AsString() {
-    final Base64.Decoder decoder = Base64.getUrlDecoder();
-    final byte[] decoded = decoder.decode(result);
-    return new String(decoded, StandardCharsets.UTF_8);
-  }
+  private String getParamsString() {
+    StringBuilder sb = new StringBuilder();
+    for (Map.Entry<String, String> entry : params.entrySet()) {
+      if (sb.length() > 0) {
+        sb.append("&");
+      }
+      sb.append(entry.getKey());
+      sb.append("=");
+      sb.append(entry.getValue());
+    }
 
-  public byte[] decodeBase64AsBytes() {
-    final Base64.Decoder decoder = Base64.getUrlDecoder();
-    return decoder.decode(result);
+    return sb.toString();
   }
 }
